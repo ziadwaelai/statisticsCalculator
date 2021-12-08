@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:statistics_calculator/screens/stepsScreen.dart';
 import 'package:statistics_calculator/shered/components.dart';
+import 'package:sizer/sizer.dart';
 
-class ResultScreen extends StatelessWidget {
+class ResultScreen extends StatefulWidget {
+  @override
+  State<ResultScreen> createState() => _ResultScreenState();
+}
+
+class _ResultScreenState extends State<ResultScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -137,13 +143,72 @@ class ResultScreen extends StatelessWidget {
               ),
               FadeAnimation(4.4, buildResult("Outlier:", outlier())),
               SizedBox(
-                height: 10,
+                height: 2.h,
               ),
               FadeAnimation(
                   4.4,
-                  TextButton(
-                    child: Text("click "),
-                    onPressed: () {
+                  InkWell(
+                    child: Container(
+                      height: 5.h,
+                      margin: EdgeInsets.symmetric(horizontal: 50),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              colors: [
+                                Colors.blue[900],
+                                Colors.blue[700],
+                                Colors.blue[500]
+                              ])),
+                      child: Center(
+                        child: Text(
+                          "Show Variance Table",
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 2),
+                        ),
+                      ),
+                    ),
+                    onTap: () {
+                      setState(() {});
+                      varianceTable();
+                      navigateTo(context, StepsScreen());
+                    },
+                  )),
+              SizedBox(
+                height: 2.h,
+              ),
+              FadeAnimation(
+                  4.8,
+                  InkWell(
+                    child: Container(
+                      height: 5.h,
+                      margin: EdgeInsets.symmetric(horizontal: 50),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              colors: [
+                                Colors.blue[900],
+                                Colors.blue[700],
+                                Colors.blue[500],
+                              ])),
+                      child: Center(
+                        child: Text(
+                          "Show Graphs",
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 2),
+                        ),
+                      ),
+                    ),
+                    onTap: () {
+                      setState(() {});
+                      varianceTable();
                       navigateTo(context, StepsScreen());
                     },
                   )),

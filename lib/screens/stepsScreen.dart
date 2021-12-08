@@ -42,6 +42,12 @@ class _StepsScreenState extends State<StepsScreen> {
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.black12),
                   color: Colors.blue[100],
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.blue.shade100,
+                        blurRadius: 20,
+                        offset: Offset(10, 10))
+                  ],
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(24.0),
@@ -114,22 +120,24 @@ class _StepsScreenState extends State<StepsScreen> {
           ),
           FadeAnimation(
             1.6,
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Container(
-                height: 5.h,
-                width: 5.w,
-                child: Row(
-                  children: [
-                    Image(
-                      image: AssetImage("asstes/images/sd.png"),
-                    ),
-                    Text(
-                      " = ${double.parse((variance() * (data.length - 1)).toStringAsFixed(3))} /${data.length - 1} = ${double.parse((variance()).toStringAsFixed(3))}",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-                    ),
-                  ],
+            SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Container(
+                  height: 4.h,
+                  width: double.infinity,
+                  child: Row(
+                    children: [
+                      Image(
+                        image: AssetImage("asstes/images/sd.png"),
+                      ),
+                      Text(
+                        " = ${double.parse((variance() * (data.length - 1)).toStringAsFixed(3))} /${data.length - 1} = ${double.parse((variance()).toStringAsFixed(3))}",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

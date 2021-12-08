@@ -146,7 +146,7 @@ class _FinalHomePageState extends State<FinalHomePage> {
                                 setState(() {});
                                 data = [];
                                 stringTolistData(inputControle.text);
-                                varianceTable();
+                               
                                 navigateTo(context, ResultScreen());
                               },
                             )),

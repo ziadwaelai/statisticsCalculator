@@ -2,7 +2,6 @@ import "dart:math";
 import 'package:flutter/rendering.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:sizer/sizer.dart';
 
 List<double> data = [];
@@ -303,26 +302,9 @@ Widget sdStepsBuldir(int i) {
           width: double.infinity,
           child: Row(
             children: [
-              Expanded(
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
                 child: Text("${data[i]}",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                    )),
-              ),
-              Spacer(),
-              Expanded(
-                child: Text("${meanTable[i]}",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                    )),
-              ),
-              Spacer(),
-              Expanded(
-                child: Text("${xMinusMean[i]}",
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 15,
@@ -332,7 +314,27 @@ Widget sdStepsBuldir(int i) {
               Spacer(),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: Text("${xMinusMeanSqure[i]}",
+                child: Text("${meanTable[i].toStringAsFixed(3)}",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                    )),
+              ),
+              Spacer(),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Text("${xMinusMean[i].toStringAsFixed(3)}",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                    )),
+              ),
+              Spacer(),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Text("${xMinusMeanSqure[i].toStringAsFixed(3)}",
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 15,
