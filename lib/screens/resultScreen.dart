@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:statistics_calculator/screens/stepsScreen.dart';
+import 'package:statistics_calculator/shered/charts.dart';
 import 'package:statistics_calculator/shered/components.dart';
 import 'package:sizer/sizer.dart';
 
@@ -208,8 +209,8 @@ class _ResultScreenState extends State<ResultScreen> {
                     ),
                     onTap: () {
                       setState(() {});
-                      varianceTable();
-                      navigateTo(context, StepsScreen());
+                      grahtClass();
+                      navigateTo(context, Charts());
                     },
                   )),
               SizedBox(

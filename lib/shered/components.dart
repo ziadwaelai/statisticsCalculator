@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 List<double> data = [];
+final List<Graph> graph = [];
 List xMinusMean = [];
 List xMinusMeanSqure = [];
 List meanTable = [];
@@ -366,4 +367,64 @@ Widget xbar(double size) {
           ))
     ],
   );
+}
+
+class Graph {
+  final double x;
+  final int y;
+
+  Graph({@required this.x, @required this.y});
+}
+
+int k = 0;
+double cW = 0;
+List<double> x = [];
+void toGroupData() {
+  while (pow(2, k) <= data.length) {
+    k++;
+  }
+  k--;
+  double rrange = range();
+  cW = (rrange / k);
+  double w = data[0];
+  while (cW <= data[data.length - 1]) {
+    cW += w;
+    x.add(cW);
+    w = 0;
+    cW += (rrange / k);
+  }
+  freq();
+}
+
+List<int> freqarr = [];
+void cumulativefreq() {
+  int c = 0;
+  for (int i = 0; i < x.length; i++) {
+    if (i != 0) {
+      freqarr.add(c);
+      c = 0;
+    }
+    for (int j = 0; j < data.length; j++) {
+      if (x[i] >= data[j]) {
+        c++;
+      }
+    }
+  }
+  freqarr.add(c);
+}
+
+void freq() {
+  cumulativefreq();
+  for (int i = 0; i < freqarr.length; i++) {
+    if (i != 0) {
+      freqarr[i] -= freqarr[i - 1];
+    }
+  }
+}
+
+void grahtClass() {
+  toGroupData();
+  for (int i = 0; i < x.length; i++) {
+    graph.add(Graph(x: x[i], y: freqarr[i]));
+  }
 }
