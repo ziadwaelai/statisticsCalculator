@@ -1,13 +1,17 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:statistics_calculator/shered/components.dart';
+import 'package:sizer/sizer.dart';
 
 final List<charts.Series<Graph, String>> series = [
   charts.Series(
     id: "1",
     data: graph,
-    domainFn: (Graph series, _) => series.x.toString(),
+    domainFn: (Graph series, _) => series.x,
     measureFn: (Graph series, _) => series.y,
+    fillColorFn: (pollution, _) => charts.ColorUtil.fromDartColor(
+      Colors.blue[900],
+    ), //column color.
   )
 ];
 
@@ -19,18 +23,43 @@ class Charts extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-            height: 10,
+            height: 15,
           ),
           FadeAnimation(
             1.3,
             Text("Histogram",
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 20,
+                  fontSize: 24,
                   fontWeight: FontWeight.w700,
                 )),
           ),
-          histogram(),
+          SizedBox(
+            height: 10,
+          ),
+          FadeAnimation(1.4, myDivider()),
+          SizedBox(
+            height: 10,
+          ),
+          FadeAnimation(
+            1.6,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.blue.shade100,
+                            blurRadius: 20,
+                            offset: Offset(0, 10))
+                      ]),
+                  width: double.infinity,
+                  height: 70.h,
+                  child: histogram()),
+            ),
+          ),
         ],
       ),
     ));
@@ -46,6 +75,10 @@ Widget histogram() {
       child: charts.BarChart(
         series,
         animate: true,
+        defaultRenderer: new charts.BarRendererConfig(
+          maxBarWidthPx: 30.w.toInt(),
+          minBarLengthPx: 10.w.toInt(),
+        ),
       ),
     ),
   );

@@ -1,14 +1,19 @@
 import "dart:math";
-import 'package:flutter/rendering.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
+
 List<double> data = [];
-final List<Graph> graph = [];
+List<Graph> graph = [];
+List<double> x = [];
+List<int> freqarr = [];
+List<String> xAxis = [];
 List xMinusMean = [];
 List xMinusMeanSqure = [];
 List meanTable = [];
+int k = 0;
+double cW = 0;
 int postion = 0;
 int medianPosrionint = 0;
 bool isCorrect = true;
@@ -350,35 +355,13 @@ Widget sdStepsBuldir(int i) {
   );
 }
 
-Widget xbar(double size) {
-  return Column(
-    children: [
-      Text("__",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: size,
-            fontWeight: FontWeight.w600,
-          )),
-      Text("X",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: size,
-            fontWeight: FontWeight.w600,
-          ))
-    ],
-  );
-}
-
 class Graph {
-  final double x;
+  final String x;
   final int y;
 
   Graph({@required this.x, @required this.y});
 }
 
-int k = 0;
-double cW = 0;
-List<double> x = [];
 void toGroupData() {
   while (pow(2, k) <= data.length) {
     k++;
@@ -396,7 +379,6 @@ void toGroupData() {
   freq();
 }
 
-List<int> freqarr = [];
 void cumulativefreq() {
   int c = 0;
   for (int i = 0; i < x.length; i++) {
@@ -405,12 +387,12 @@ void cumulativefreq() {
       c = 0;
     }
     for (int j = 0; j < data.length; j++) {
-      if (x[i] >= data[j]) {
+      if (x[i] > data[j]) {
         c++;
       }
     }
   }
-  freqarr.add(c);
+  freqarr.add(c + 1);
 }
 
 void freq() {
@@ -422,9 +404,20 @@ void freq() {
   }
 }
 
+void xAxisName() {
+  String xaxis = "";
+  double lowerLimit = data[0];
+  for (int i = 0; i < x.length; i++) {
+    xaxis = "$lowerLimit -> ${x[i]}";
+    lowerLimit = x[i];
+    xAxis.add(xaxis);
+  }
+}
+
 void grahtClass() {
   toGroupData();
+  xAxisName();
   for (int i = 0; i < x.length; i++) {
-    graph.add(Graph(x: x[i], y: freqarr[i]));
+    graph.add(Graph(x: xAxis[i], y: freqarr[i]));
   }
 }

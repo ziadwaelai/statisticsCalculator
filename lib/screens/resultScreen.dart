@@ -1,4 +1,7 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_admob/native_admob_controller.dart';
+import 'package:statistics_calculator/ads/ads.dart';
 import 'package:statistics_calculator/screens/stepsScreen.dart';
 import 'package:statistics_calculator/shered/charts.dart';
 import 'package:statistics_calculator/shered/components.dart';
@@ -10,6 +13,32 @@ class ResultScreen extends StatefulWidget {
 }
 
 class _ResultScreenState extends State<ResultScreen> {
+  AdmobBannerSize bannerSize;
+  AdmobInterstitial interstitialAd;
+  final _nativeAdController = NativeAdmobController();
+  @override
+  void initState() {
+    super.initState();
+
+    //Ads
+    interstitialAd = AdmobInterstitial(
+      adUnitId: AdsManager.interstitialAdUnitId,
+      listener: (AdmobAdEvent event, Map<String, dynamic> args) {
+        if (event == AdmobAdEvent.closed) interstitialAd.load();
+      },
+    );
+
+    interstitialAd.load();
+    _nativeAdController.reloadAd(forceRefresh: true);
+  }
+
+  @override
+  void dispose() {
+    interstitialAd.dispose();
+    _nativeAdController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -174,6 +203,7 @@ class _ResultScreenState extends State<ResultScreen> {
                     ),
                     onTap: () {
                       setState(() {});
+                      interstitialAd.show();
                       varianceTable();
                       navigateTo(context, StepsScreen());
                     },
@@ -209,7 +239,13 @@ class _ResultScreenState extends State<ResultScreen> {
                     ),
                     onTap: () {
                       setState(() {});
+                      x = [];
+                      freqarr = [];
+                      graph = [];
+                      k = 0;
+                      cW = 0;
                       grahtClass();
+                      interstitialAd.show();
                       navigateTo(context, Charts());
                     },
                   )),
