@@ -2,7 +2,7 @@ import "dart:math";
 import 'package:simple_animations/simple_animations.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 List<double> data = [];
 List<Graph> graph = [];
@@ -408,7 +408,7 @@ void xAxisName() {
   String xaxis = "";
   double lowerLimit = data[0];
   for (int i = 0; i < x.length; i++) {
-    xaxis = "$lowerLimit -> ${x[i]}";
+    xaxis = "${lowerLimit.toStringAsFixed(3)} -> ${x[i].toStringAsFixed(3)}";
     lowerLimit = x[i];
     xAxis.add(xaxis);
   }
@@ -419,5 +419,20 @@ void grahtClass() {
   xAxisName();
   for (int i = 0; i < x.length; i++) {
     graph.add(Graph(x: xAxis[i], y: freqarr[i]));
+  }
+}
+
+Widget bannerAds(BannerAd _ad, bool isLoading) {
+  if (isLoading == true) {
+    return Container(
+      width: _ad.size.width.toDouble(),
+      height: _ad.size.height.toDouble(),
+      alignment: Alignment.center,
+      child: AdWidget(
+        ad: _ad,
+      ),
+    );
+  } else {
+    return CircularProgressIndicator();
   }
 }

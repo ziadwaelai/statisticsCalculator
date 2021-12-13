@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:statistics_calculator/ads/ads.dart';
 import 'package:statistics_calculator/shered/components.dart';
 import 'package:sizer/sizer.dart';
 
@@ -8,6 +10,34 @@ class StepsScreen extends StatefulWidget {
 }
 
 class _StepsScreenState extends State<StepsScreen> {
+  BannerAd _ad;
+  bool isLoading;
+  @override
+  void initState() {
+    super.initState();
+    _ad = BannerAd(
+        size: AdSize.banner,
+        adUnitId: AdsManager.bannerAdUnitId,
+        listener: BannerAdListener(
+          onAdLoaded: (ad) {
+            setState(() {
+              isLoading = true;
+            });
+          },
+          onAdFailedToLoad: (ad, error) {
+            print(error);
+          },
+        ),
+        request: AdRequest());
+    _ad.load();
+  }
+
+  @override
+  void dispose() {
+    _ad?.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -121,18 +151,18 @@ class _StepsScreenState extends State<StepsScreen> {
           FadeAnimation(
             1.6,
             SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Container(
                   height: 4.h,
-                  width: double.infinity,
                   child: Row(
                     children: [
                       Image(
                         image: AssetImage("asstes/images/sd.png"),
                       ),
                       Text(
-                        " = ${double.parse((variance() * (data.length - 1)).toStringAsFixed(3))} /${data.length - 1} = ${double.parse((variance()).toStringAsFixed(3))}",
+                        " = ${(variance() * (data.length - 1)).toStringAsFixed(3)} /${data.length - 1} = ${(variance()).toStringAsFixed(3)}",
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.w600),
                       ),
@@ -149,6 +179,7 @@ class _StepsScreenState extends State<StepsScreen> {
           SizedBox(
             height: 30,
           ),
+          bannerAds(_ad, isLoading),
         ],
       ),
     ));

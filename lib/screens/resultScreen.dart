@@ -1,6 +1,5 @@
-import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_admob/native_admob_controller.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:statistics_calculator/ads/ads.dart';
 import 'package:statistics_calculator/screens/stepsScreen.dart';
 import 'package:statistics_calculator/shered/charts.dart';
@@ -13,29 +12,31 @@ class ResultScreen extends StatefulWidget {
 }
 
 class _ResultScreenState extends State<ResultScreen> {
-  AdmobBannerSize bannerSize;
-  AdmobInterstitial interstitialAd;
-  final _nativeAdController = NativeAdmobController();
+  BannerAd _ad;
+  bool isLoading;
   @override
   void initState() {
     super.initState();
-
-    //Ads
-    interstitialAd = AdmobInterstitial(
-      adUnitId: AdsManager.interstitialAdUnitId,
-      listener: (AdmobAdEvent event, Map<String, dynamic> args) {
-        if (event == AdmobAdEvent.closed) interstitialAd.load();
-      },
-    );
-
-    interstitialAd.load();
-    _nativeAdController.reloadAd(forceRefresh: true);
+    _ad = BannerAd(
+        size: AdSize.banner,
+        adUnitId: AdsManager.bannerAdUnitId,
+        listener: BannerAdListener(
+          onAdLoaded: (ad) {
+            setState(() {
+              isLoading = true;
+            });
+          },
+          onAdFailedToLoad: (ad, error) {
+            print(error);
+          },
+        ),
+        request: AdRequest());
+    _ad.load();
   }
 
   @override
   void dispose() {
-    interstitialAd.dispose();
-    _nativeAdController.dispose();
+    _ad?.dispose();
     super.dispose();
   }
 
@@ -48,7 +49,7 @@ class _ResultScreenState extends State<ResultScreen> {
           physics: BouncingScrollPhysics(),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
                 height: 10,
@@ -203,7 +204,6 @@ class _ResultScreenState extends State<ResultScreen> {
                     ),
                     onTap: () {
                       setState(() {});
-                      interstitialAd.show();
                       varianceTable();
                       navigateTo(context, StepsScreen());
                     },
@@ -245,13 +245,13 @@ class _ResultScreenState extends State<ResultScreen> {
                       k = 0;
                       cW = 0;
                       grahtClass();
-                      interstitialAd.show();
                       navigateTo(context, Charts());
                     },
                   )),
               SizedBox(
                 height: 10,
               ),
+              bannerAds(_ad, isLoading),
             ],
           ),
         ),

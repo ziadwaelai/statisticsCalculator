@@ -1,5 +1,7 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:statistics_calculator/ads/ads.dart';
 import 'package:statistics_calculator/shered/components.dart';
 import 'package:sizer/sizer.dart';
 
@@ -15,7 +17,40 @@ final List<charts.Series<Graph, String>> series = [
   )
 ];
 
-class Charts extends StatelessWidget {
+class Charts extends StatefulWidget {
+  @override
+  State<Charts> createState() => _ChartsState();
+}
+
+class _ChartsState extends State<Charts> {
+  BannerAd _ad;
+  bool isLoading;
+  @override
+  void initState() {
+    super.initState();
+    _ad = BannerAd(
+        size: AdSize.banner,
+        adUnitId: AdsManager.bannerAdUnitId,
+        listener: BannerAdListener(
+          onAdLoaded: (ad) {
+            setState(() {
+              isLoading = true;
+            });
+          },
+          onAdFailedToLoad: (ad, error) {
+            print(error);
+          },
+        ),
+        request: AdRequest());
+    _ad.load();
+  }
+
+  @override
+  void dispose() {
+    _ad?.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,6 +95,7 @@ class Charts extends StatelessWidget {
                   child: histogram()),
             ),
           ),
+          bannerAds(_ad,isLoading),
         ],
       ),
     ));

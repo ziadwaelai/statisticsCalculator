@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_native_admob/native_admob_controller.dart';
 import 'package:statistics_calculator/ads/ads.dart';
 import 'package:statistics_calculator/screens/resultScreen.dart';
 import 'package:statistics_calculator/shered/components.dart';
 import 'package:sizer/sizer.dart';
-import 'package:admob_flutter/admob_flutter.dart';
-import 'package:flutter_native_admob/flutter_native_admob.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class FinalHomePage extends StatefulWidget {
   @override
@@ -14,29 +12,31 @@ class FinalHomePage extends StatefulWidget {
 
 class _FinalHomePageState extends State<FinalHomePage> {
   var formkey = GlobalKey<FormState>();
-  final _nativeAdController = NativeAdmobController();
-  AdmobBannerSize bannerSize;
-  AdmobInterstitial interstitialAd;
+  BannerAd _ad;
+  bool isLoading;
   @override
   void initState() {
     super.initState();
-
-    //Ads
-    interstitialAd = AdmobInterstitial(
-      adUnitId: AdsManager.interstitialAdUnitId,
-      listener: (AdmobAdEvent event, Map<String, dynamic> args) {
-        if (event == AdmobAdEvent.closed) interstitialAd.load();
-      },
-    );
-
-    interstitialAd.load();
-    _nativeAdController.reloadAd(forceRefresh: true);
+    _ad = BannerAd(
+        size: AdSize.banner,
+        adUnitId: AdsManager.bannerAdUnitId,
+        listener: BannerAdListener(
+          onAdLoaded: (ad) {
+            setState(() {
+              isLoading = true;
+            });
+          },
+          onAdFailedToLoad: (ad, error) {
+            print(error);
+          },
+        ),
+        request: AdRequest());
+    _ad.load();
   }
 
   @override
   void dispose() {
-    interstitialAd.dispose();
-    _nativeAdController.dispose();
+    _ad?.dispose();
     super.dispose();
   }
 
@@ -174,7 +174,7 @@ class _FinalHomePageState extends State<FinalHomePage> {
                               onTap: () {
                                 setState(() {});
                                 data = [];
-                                interstitialAd.show();
+                                graph = [];
                                 stringTolistData(inputControle.text);
                                 navigateTo(context, ResultScreen());
                               },
@@ -182,13 +182,7 @@ class _FinalHomePageState extends State<FinalHomePage> {
                         SizedBox(
                           height: 30,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: AdmobBanner(
-                              adUnitId: AdsManager.bannerAdUnitId,
-                              adSize: AdmobBannerSize.ADAPTIVE_BANNER(
-                                  width: 80.w.toInt())),
-                        )
+                        bannerAds(_ad, isLoading),
                       ],
                     ),
                   ),
