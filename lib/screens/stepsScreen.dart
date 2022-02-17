@@ -10,14 +10,14 @@ class StepsScreen extends StatefulWidget {
 }
 
 class _StepsScreenState extends State<StepsScreen> {
-  BannerAd _ad;
+  BannerAd _ad3;
   bool isLoading;
   @override
   void initState() {
     super.initState();
-    _ad = BannerAd(
+    _ad3 = BannerAd(
         size: AdSize.banner,
-        adUnitId: AdsManager.bannerAdUnitId,
+        adUnitId: AdsManager.bannerAdUnitId3,
         listener: BannerAdListener(
           onAdLoaded: (ad) {
             setState(() {
@@ -29,12 +29,12 @@ class _StepsScreenState extends State<StepsScreen> {
           },
         ),
         request: AdRequest());
-    _ad.load();
+    _ad3.load();
   }
 
   @override
   void dispose() {
-    _ad?.dispose();
+    _ad3?.dispose();
     super.dispose();
   }
 
@@ -179,7 +179,7 @@ class _StepsScreenState extends State<StepsScreen> {
           SizedBox(
             height: 30,
           ),
-          bannerAds(_ad, isLoading),
+          bannerAds(_ad3, isLoading),
         ],
       ),
     ));

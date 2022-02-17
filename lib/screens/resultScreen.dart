@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:statistics_calculator/ads/ads.dart';
 import 'package:statistics_calculator/screens/stepsScreen.dart';
-import 'package:statistics_calculator/shered/charts.dart';
+import 'package:statistics_calculator/screens/charts.dart';
 import 'package:statistics_calculator/shered/components.dart';
 import 'package:sizer/sizer.dart';
+
+import 'groupData.dart';
+
+const int maxFailedLoadAttempts = 3;
 
 class ResultScreen extends StatefulWidget {
   @override
@@ -12,14 +16,37 @@ class ResultScreen extends StatefulWidget {
 }
 
 class _ResultScreenState extends State<ResultScreen> {
-  BannerAd _ad;
+  BannerAd _ad2;
+  InterstitialAd _interstitialAd;
   bool isLoading;
+  void _createInterstitialAd() {
+    InterstitialAd.load(
+      adUnitId: AdsManager.interstitialAdUnitId2,
+      request: AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (InterstitialAd ad) {
+          _interstitialAd = ad;
+          _interstitialLoadAttempts = 0;
+        },
+        onAdFailedToLoad: (LoadAdError error) {
+          _interstitialLoadAttempts += 1;
+          _interstitialAd = null;
+          if (_interstitialLoadAttempts <= maxFailedLoadAttempts) {
+            _createInterstitialAd();
+          }
+        },
+      ),
+    );
+  }
+
+  int _interstitialLoadAttempts = 0;
   @override
   void initState() {
     super.initState();
-    _ad = BannerAd(
+    _createInterstitialAd();
+    _ad2 = BannerAd(
         size: AdSize.banner,
-        adUnitId: AdsManager.bannerAdUnitId,
+        adUnitId: AdsManager.bannerAdUnitId2,
         listener: BannerAdListener(
           onAdLoaded: (ad) {
             setState(() {
@@ -31,13 +58,30 @@ class _ResultScreenState extends State<ResultScreen> {
           },
         ),
         request: AdRequest());
-    _ad.load();
+    _ad2.load();
+  }
+
+  void _showInterstitialAd() {
+    if (_interstitialAd != null) {
+      _interstitialAd.fullScreenContentCallback = FullScreenContentCallback(
+        onAdDismissedFullScreenContent: (InterstitialAd ad) {
+          ad.dispose();
+          _createInterstitialAd();
+        },
+        onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
+          ad.dispose();
+          _createInterstitialAd();
+        },
+      );
+      _interstitialAd.show();
+    }
   }
 
   @override
   void dispose() {
-    _ad?.dispose();
+    _ad2?.dispose();
     super.dispose();
+    _interstitialAd?.dispose();
   }
 
   @override
@@ -239,19 +283,53 @@ class _ResultScreenState extends State<ResultScreen> {
                     ),
                     onTap: () {
                       setState(() {});
-                      x = [];
-                      freqarr = [];
-                      graph = [];
-                      k = 0;
-                      cW = 0;
-                      grahtClass();
+                      funhistogram(grath());
+                      funLiner(graph2());
+                      _showInterstitialAd();
                       navigateTo(context, Charts());
                     },
                   )),
               SizedBox(
                 height: 10,
               ),
-              bannerAds(_ad, isLoading),
+              FadeAnimation(
+                  4.8,
+                  InkWell(
+                    child: Container(
+                      height: 5.h,
+                      margin: EdgeInsets.symmetric(horizontal: 50),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              colors: [
+                                Colors.blue[900],
+                                Colors.blue[700],
+                                Colors.blue[500],
+                              ])),
+                      child: Center(
+                        child: Text(
+                          "Show Group Data",
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 2),
+                        ),
+                      ),
+                    ),
+                    onTap: () {
+                      setState(() {});
+                      funhistogram(grath());
+
+                      _showInterstitialAd();
+                      navigateTo(context, GroupData());
+                    },
+                  )),
+              SizedBox(
+                height: 10,
+              ),
+              bannerAds(_ad2, isLoading),
             ],
           ),
         ),
