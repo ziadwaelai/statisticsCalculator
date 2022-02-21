@@ -31,11 +31,27 @@ dependencies:
   hexcolor: ^2.0.5
   simple_animations: ^1.3.3
   sizer: ^2.0.15
+  charts_flutter: ^0.12.0
+  google_mobile_ads: ^1.0.1
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: any
+  flutter_native_splash: any
+flutter_native_splash:
+  color: "#271ABE"
+  image: "asstes/images/logo.png"
+  android: true
+  ios: true
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "asstes/images/1024.png"  
+  adaptive_icon_background: "#271ABE"
+  adaptive_icon_foreground: "asstes/images/1024.png"
+  
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

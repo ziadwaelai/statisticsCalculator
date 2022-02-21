@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.statistics_calculator">
+    <uses-permission android:name="android.permission.INTERNET"/> 
    <application
         android:label="statistics_calculator"
         android:icon="@mipmap/ic_launcher">
@@ -37,5 +38,8 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <meta-data
+             android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-1362904048674905~9893859862" />    
     </application>
 </manifest>
