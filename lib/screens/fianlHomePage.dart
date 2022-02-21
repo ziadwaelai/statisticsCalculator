@@ -178,10 +178,10 @@ class _FinalHomePageState extends State<FinalHomePage> {
                                           if (value.isEmpty) {
                                             return "enter the data";
                                           } else if (data.length < 3) {
-                                            return "the mustnt be less than 3";
+                                            return "data mustn't be less than 3";
                                           } else if (data[data.length - 1] >=
                                               1000000) {
-                                            return "the data is too longe";
+                                            return "data is too longe";
                                           }
                                           return null;
                                         },
