@@ -162,7 +162,7 @@ class _StepsScreenState extends State<StepsScreen> {
                         image: AssetImage("asstes/images/sd.png"),
                       ),
                       Text(
-                        " = ${(variance() * (data.length - 1)).toStringAsFixed(3)} /${data.length - 1} = ${(variance()).toStringAsFixed(3)}",
+                        " = ${(variance() * (data.length - 1)).toStringAsFixed(2)} /${data.length - 1} = ${(variance()).toStringAsFixed(2)}",
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.w600),
                       ),
