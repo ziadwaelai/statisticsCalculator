@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:statistics_calculator/screens/charts.dart';
 
 List<double> data = [];
 Graph z;
@@ -347,44 +346,52 @@ Widget sdStepsBuldir(int i) {
           width: double.infinity,
           child: Row(
             children: [
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Text("${data[i]}",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                    )),
+              Expanded(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Text("${data[i]}",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      )),
+                ),
               ),
               Spacer(),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Text("${meanTable[i].toStringAsFixed(3)}",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                    )),
+              Expanded(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Text("${meanTable[i].toStringAsFixed(2)}",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      )),
+                ),
               ),
               Spacer(),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Text("${xMinusMean[i].toStringAsFixed(3)}",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                    )),
+              Expanded(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Text("${xMinusMean[i].toStringAsFixed(2)}",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      )),
+                ),
               ),
               Spacer(),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Text("${xMinusMeanSqure[i].toStringAsFixed(2)}",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                    )),
+              Expanded(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Text("${xMinusMeanSqure[i].toStringAsFixed(2)}",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      )),
+                ),
               ),
             ],
           ),
@@ -495,22 +502,29 @@ Widget groupDataSteps(int i) {
           child: Row(
             children: [
               Expanded(
-                child: Text("${interval[i]}",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                    )),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Text("${interval[i]}",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      )),
+                ),
               ),
-              Spacer(),
-              Spacer(),
               Expanded(
-                child: Text("${freq[i]}",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                    )),
+                child: Container(
+                  alignment: Alignment.center,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Text("${freq[i]}",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        )),
+                  ),
+                ),
               ),
             ],
           ),

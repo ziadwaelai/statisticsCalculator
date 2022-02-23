@@ -103,7 +103,7 @@ class _FinalHomePageState extends State<FinalHomePage> {
                 height: 80,
               ),
               Padding(
-                padding: EdgeInsets.all(20),
+                padding:const EdgeInsets.all(20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -111,37 +111,37 @@ class _FinalHomePageState extends State<FinalHomePage> {
                     Center(
                       child: FadeAnimation(
                           1,
-                          Text(
+                         const Text(
                             "Statistics",
                             style: TextStyle(color: Colors.white, fontSize: 50),
                           )),
                     ),
-                    SizedBox(
+                  const  SizedBox(
                       height: 10,
                     ),
                     FadeAnimation(
                         1.3,
-                        Text(
+                        const Text(
                           "Calculator",
                           style: TextStyle(color: Colors.white, fontSize: 20),
                         )),
                   ],
                 ),
               ),
-              SizedBox(height: 20),
+            const  SizedBox(height: 20),
               Expanded(
                 child: Container(
                   decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.only(
+                      borderRadius:const  BorderRadius.only(
                           topLeft: Radius.circular(60),
                           topRight: Radius.circular(60))),
                   child: SingleChildScrollView(
                     child: Padding(
-                      padding: EdgeInsets.all(30),
+                      padding: const EdgeInsets.all(30),
                       child: Column(
                         children: <Widget>[
-                          SizedBox(
+                         const SizedBox(
                             height: 60,
                           ),
                           FadeAnimation(
@@ -201,10 +201,10 @@ class _FinalHomePageState extends State<FinalHomePage> {
                                   ],
                                 ),
                               )),
-                          SizedBox(
+                         const SizedBox(
                             height: 40,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 40,
                           ),
                           FadeAnimation(
@@ -223,7 +223,7 @@ class _FinalHomePageState extends State<FinalHomePage> {
                                             Colors.blue[500]
                                           ])),
                                   child: Center(
-                                    child: Text(
+                                    child:const Text(
                                       "Calculate",
                                       style: TextStyle(
                                           fontSize: 18,
@@ -241,7 +241,7 @@ class _FinalHomePageState extends State<FinalHomePage> {
                                   }
                                 },
                               )),
-                          SizedBox(
+                         const SizedBox(
                             height: 30,
                           ),
                           bannerAds(_ad1, isLoading),

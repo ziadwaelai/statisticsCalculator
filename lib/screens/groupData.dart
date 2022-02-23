@@ -44,23 +44,23 @@ class _GroupDataState extends State<GroupData> {
         child: ListView(
           physics: BouncingScrollPhysics(),
           children: [
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Center(
                 child: FadeAnimation(
                     1.1,
-                    Text("Grouped Data",
+                   const Text("Grouped Data",
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 20,
                           fontWeight: FontWeight.w700,
                         )))),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             myDivider(),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             FadeAnimation(
@@ -86,7 +86,7 @@ class _GroupDataState extends State<GroupData> {
                         children: [
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
-                            child: Text("Classes",
+                            child: const Text("Classes",
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 18,
@@ -96,7 +96,7 @@ class _GroupDataState extends State<GroupData> {
                           Spacer(),
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
-                            child: Text("Frequency (f)",
+                            child: const Text("Frequency (f)",
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 20,
@@ -118,15 +118,15 @@ class _GroupDataState extends State<GroupData> {
                   itemBuilder: (context, index) => groupDataSteps(index),
                   itemCount: freq.length),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             FadeAnimation(1.4, myDivider2()),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             bannerAds(_ad5, isLoading),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
           ],
